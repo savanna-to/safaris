@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, MapPin } from "lucide-react"
 
 export function Hero() {
   return (
@@ -37,6 +37,12 @@ export function Hero() {
           >
             <a href="#pricing">Book Now</a>
           </Button>
+        </div>
+        <div className="mt-8 flex items-center justify-center gap-2 text-base font-semibold">
+          <MapPin className="h-5 w-5 text-white" style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.4))" }} />
+          <span className="text-white" style={{ textShadow: "0 2px 4px rgba(0,0,0,0.4)" }}>
+            Kenya & Tanzania
+          </span>
         </div>
       </div>
     </section>
