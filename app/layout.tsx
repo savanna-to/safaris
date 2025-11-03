@@ -19,7 +19,25 @@ const karla = Karla({
 export const metadata: Metadata = {
   title: "Savanna Safaris",
   description: "Authentic African safaris with expert guides. Experience the wild beauty of the savanna.",
+  keywords: [
+    "Kenya safaris",
+    "Tanzania safaris",
+    "African wildlife tours",
+    "safari tours Kenya",
+    "safari tours Tanzania",
+    "Serengeti safari",
+    "Masai Mara safari",
+    "Amboseli safari",
+    "Kilimanjaro tours",
+    "Ngorongoro Crater safari",
+    "African safari adventures",
+    "wildlife photography tours",
+    "guided safari tours",
+  ],
   generator: "v0.app",
+  alternates: {
+    canonical: "https://safaris.savanna.to",
+  },
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
@@ -56,6 +74,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "TravelAgency",
+              name: "Savanna Safaris",
+              description: "Authentic African safaris with expert guides in Kenya and Tanzania",
+              url: "https://safaris.savanna.to",
+              logo: "https://safaris.savanna.to/logo.png",
+              image: "https://safaris.savanna.to/og-image.png",
+              email: "safaris@savanna.to",
+              areaServed: ["Kenya", "Tanzania"],
+              priceRange: "$$-$$$",
+              sameAs: [
+                "https://facebook.com/savannasafaris",
+                "https://instagram.com/savannasafaris",
+                "https://twitter.com/savannasafaris",
+              ],
+            }),
+          }}
+        />
+      </head>
       <body className={`${karla.variable} ${montserrat.variable} font-sans antialiased`}>
         {children}
         <Analytics />

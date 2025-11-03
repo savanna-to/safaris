@@ -8,7 +8,7 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         <img
           src="/african-savanna-landscape-with-acacia-trees-at-gol.jpg"
-          alt="African Savanna"
+          alt="African savanna landscape with acacia trees at golden hour sunset in Kenya"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#4A3728]/50 via-[#4A3728]/30 to-background" />
