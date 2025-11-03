@@ -3,19 +3,19 @@ import { Star } from "lucide-react"
 
 const testimonials = [
   {
-    name: "Sarah Mitchell",
+    name: "Sarah",
     location: "London, UK",
     text: "An absolutely breathtaking experience! The guides were knowledgeable, the accommodations were luxurious, and seeing lions in the wild was a dream come true.",
     rating: 5,
   },
   {
-    name: "James Chen",
+    name: "James",
     location: "San Francisco, USA",
     text: "Savanna Safaris exceeded all expectations. Every detail was perfectly planned, and the wildlife encounters were incredible. Already planning our return trip!",
     rating: 5,
   },
   {
-    name: "Emma Rodriguez",
+    name: "Emma",
     location: "Barcelona, Spain",
     text: "The wildlife safari was phenomenal. Our guide knew exactly where and when to find the best shots. Came home with memories and photos that will last forever.",
     rating: 5,
