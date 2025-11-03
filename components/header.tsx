@@ -51,7 +51,7 @@ export function Header() {
 
           <div className="hidden md:block">
             <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-              <a href="#pricing">Book Your Safari</a>
+              <a href="#contact">Inquire Now</a>
             </Button>
           </div>
 
@@ -97,8 +97,8 @@ export function Header() {
               >
                 Contact
               </Link>
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 w-full" asChild>
-                <a href="#pricing">Book Your Safari</a>
+              <Button size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+                <a href="#contact">Inquire Now</a>
               </Button>
             </nav>
           </div>

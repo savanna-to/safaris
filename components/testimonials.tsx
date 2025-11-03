@@ -17,7 +17,7 @@ const testimonials = [
   {
     name: "Emma Rodriguez",
     location: "Barcelona, Spain",
-    text: "The photography safari was phenomenal. Our guide knew exactly where and when to find the best shots. Came home with memories and photos that will last forever.",
+    text: "The wildlife safari was phenomenal. Our guide knew exactly where and when to find the best shots. Came home with memories and photos that will last forever.",
     rating: 5,
   },
 ]

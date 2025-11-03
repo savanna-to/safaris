@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react"
+import { Mail, MapPin } from "lucide-react"
 
 export function Footer() {
   return (
@@ -13,9 +13,7 @@ export function Footer() {
               <Image src="/logo.png" alt="Savanna Safaris" width={40} height={40} className="h-10 w-10" />
               <span className="text-lg font-bold font-[family-name:var(--font-heading)]">savanna safaris</span>
             </Link>
-            <p className="text-accent-foreground/80 leading-relaxed">
-              Creating unforgettable African safari experiences since 2010.
-            </p>
+            <p className="text-accent-foreground/80 leading-relaxed">Authentic African safaris with expert guides.</p>
           </div>
 
           {/* Quick Links */}
@@ -46,14 +44,6 @@ export function Footer() {
                   Pricing
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/about"
-                  className="text-accent-foreground/80 hover:text-accent-foreground transition-colors"
-                >
-                  About Us
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -61,10 +51,10 @@ export function Footer() {
           <div>
             <h3 className="font-semibold text-lg mb-4 font-[family-name:var(--font-heading)]">Contact Us</h3>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2">
+              {/* <li className="flex items-start gap-2">
                 <Phone className="h-5 w-5 flex-shrink-0 mt-0.5 text-primary" />
                 <span className="text-accent-foreground/80">+1 (555) 123-4567</span>
-              </li>
+              </li> */}
               <li className="flex items-start gap-2">
                 <Mail className="h-5 w-5 flex-shrink-0 mt-0.5 text-primary" />
                 <span className="text-accent-foreground/80">safaris@savanna.to</span>
@@ -77,7 +67,7 @@ export function Footer() {
           </div>
 
           {/* Social Media */}
-          <div>
+          {/* <div>
             <h3 className="font-semibold text-lg mb-4 font-[family-name:var(--font-heading)]">Follow Us</h3>
             <div className="flex gap-4">
               <Link
@@ -108,7 +98,7 @@ export function Footer() {
                 <Twitter className="h-5 w-5" />
               </Link>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Bottom Bar */}
