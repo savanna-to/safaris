@@ -57,7 +57,7 @@ export function FinalCTA() {
         setTimeout(() => setSubmitMessage(""), 5000)
       } catch (error) {
         console.error("Error sending message:", error)
-        setSubmitMessage("An error occurred. Please try again or contact us directly at info@savannasafaris.com")
+        setSubmitMessage("An error occurred. Please try again or contact us directly at safaris@savanna.to")
       }
     })
   }

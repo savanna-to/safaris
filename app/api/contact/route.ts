@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     // Check if we have the API key
     if (!process.env.RESEND_API_KEY) {
       console.log("⚠️ RESEND_API_KEY not found, simulating email...")
-      console.log("📧 Would send to: info@savannasafaris.com")
+      console.log("📧 Would send to: safaris@savanna.to")
       console.log("📧 From:", email)
       console.log("📧 Subject: Safari Inquiry from", name)
       console.log("📧 Details:", { travelers, packageType, travelMonth, message })
@@ -22,7 +22,9 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Send email to you using Resend API
+    const fromEmail = "Savanna Safaris <safaris@savanna.to>"
+
+    // Send inquiry email to business
     const emailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -30,8 +32,9 @@ export async function POST(request: NextRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "info@savannasafaris.com",
-        to: "info@savannasafaris.com",
+        from: fromEmail,
+        to: "safaris@savanna.to",
+        reply_to: email,
         subject: `Safari Inquiry from ${name}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -48,10 +51,10 @@ export async function POST(request: NextRequest) {
               <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0;">
                 <p style="margin: 8px 0;"><strong>👤 Name:</strong> ${name}</p>
                 <p style="margin: 8px 0;"><strong>📧 Email:</strong> <a href="mailto:${email}" style="color: #E67E22;">${email}</a></p>
-                ${phone ? `<p style="margin: 8px 0;"><strong>📞 Phone:</strong> ${phone}</p>` : ""}
+                <p style="margin: 8px 0;"><strong>📞 Phone:</strong> ${phone || '<span style="color: #9ca3af;">Not provided</span>'}</p>
                 <p style="margin: 8px 0;"><strong>👥 Travelers:</strong> ${travelers}</p>
-                ${packageType ? `<p style="margin: 8px 0;"><strong>📦 Package:</strong> ${packageType}</p>` : ""}
-                ${travelMonth ? `<p style="margin: 8px 0;"><strong>📅 Travel Month:</strong> ${travelMonth}</p>` : ""}
+                <p style="margin: 8px 0;"><strong>📦 Package:</strong> ${packageType || '<span style="color: #9ca3af;">Not selected</span>'}</p>
+                <p style="margin: 8px 0;"><strong>📅 Travel Month:</strong> ${travelMonth || '<span style="color: #9ca3af;">Not specified</span>'}</p>
                 <p style="margin: 8px 0;"><strong>📅 Received:</strong> ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
               </div>
               
@@ -65,7 +68,12 @@ export async function POST(request: NextRequest) {
                 </div>
               </div>
               `
-                  : ""
+                  : `
+              <div style="background-color: #fff; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
+                <h3 style="color: #4A3728; margin-top: 0;">💬 Message</h3>
+                <p style="color: #9ca3af; margin: 0;">No message provided</p>
+              </div>
+              `
               }
               
               <div style="margin-top: 30px; padding: 20px; background-color: #fef3c7; border-radius: 8px; border-left: 4px solid #E67E22;">
@@ -78,7 +86,7 @@ export async function POST(request: NextRequest) {
             
             <div style="background-color: #f9fafb; padding: 20px; text-align: center; border-radius: 0 0 8px 8px; border-top: 1px solid #e5e7eb;">
               <p style="color: #6b7280; font-size: 12px; margin: 0;">
-                This message was sent via the contact form on <strong>savannasafaris.com</strong>
+                This message was sent via the contact form on <strong>safaris.savanna.to</strong>
               </p>
             </div>
           </div>
@@ -92,84 +100,67 @@ export async function POST(request: NextRequest) {
       throw new Error(`Failed to send email via Resend: ${emailResponse.status}`)
     }
 
-    // Send auto-reply to user
-    const autoReplyResponse = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "info@savannasafaris.com",
-        to: email,
-        subject: `Thank You for Your Safari Inquiry - Savanna Safaris`,
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <div style="background: linear-gradient(135deg, #E67E22 0%, #D35400 100%); padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
-              <h1 style="color: white; margin: 0; font-size: 28px;">Savanna Safaris</h1>
-              <p style="color: white; margin: 10px 0; opacity: 0.9; font-size: 16px;">Thank you for your interest!</p>
-            </div>
-            
-            <div style="background-color: #fff; padding: 30px; border: 1px solid #e5e7eb; border-top: none;">
-              <h2 style="color: #4A3728; margin-top: 0;">Hello ${name.split(" ")[0]}! 👋</h2>
-              
-              <p style="color: #4b5563; line-height: 1.6; font-size: 16px;">
-                Thank you for your safari inquiry. We have received your message and will 
-                contact you as soon as possible. Our team strives to respond within 
-                <strong style="color: #E67E22;">24 hours</strong>.
-              </p>
-              
-              <div style="background-color: #f0fdf4; padding: 20px; border-radius: 8px; border-left: 4px solid #22c55e; margin: 25px 0;">
-                <h3 style="color: #166534; margin-top: 0; font-size: 16px;">📋 Your Inquiry Summary:</h3>
-                <p style="color: #166534; margin: 5px 0;"><strong>Travelers:</strong> ${travelers}</p>
-                ${packageType ? `<p style="color: #166534; margin: 5px 0;"><strong>Package:</strong> ${packageType}</p>` : ""}
-                ${travelMonth ? `<p style="color: #166534; margin: 5px 0;"><strong>Travel Month:</strong> ${travelMonth}</p>` : ""}
-                <p style="color: #166534; margin: 5px 0;"><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+    try {
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: fromEmail,
+          to: email,
+          subject: "Thank you for your Safari Inquiry",
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+              <div style="background: linear-gradient(135deg, #E67E22 0%, #D35400 100%); padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+                <h1 style="color: white; margin: 0; font-size: 24px;">Savanna Safaris</h1>
+                <p style="color: white; margin: 5px 0; opacity: 0.9;">Thank You for Your Inquiry</p>
               </div>
               
-              <p style="color: #4b5563; line-height: 1.6;">
-                In the meantime, feel free to explore more about our safari packages 
-                on our website or contact us directly:
-              </p>
-              
-              <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 25px 0;">
-                <h3 style="color: #4A3728; margin-top: 0; font-size: 16px;">📞 Contact Information</h3>
-                <p style="margin: 8px 0; color: #4A3728;"><strong>📧 Email:</strong> <a href="mailto:info@savannasafaris.com" style="color: #E67E22;">info@savannasafaris.com</a></p>
-                <p style="margin: 8px 0; color: #4A3728;"><strong>📞 Phone:</strong> <a href="tel:+1234567890" style="color: #E67E22;">+1 (234) 567-890</a></p>
-                <p style="margin: 8px 0; color: #4A3728;"><strong>🌐 Website:</strong> <a href="https://savannasafaris.com" style="color: #E67E22;">savannasafaris.com</a></p>
+              <div style="background-color: #fff; padding: 30px; border: 1px solid #e5e7eb; border-top: none;">
+                <h2 style="color: #4A3728; margin-top: 0;">Hello ${name},</h2>
+                
+                <p style="color: #4b5563; line-height: 1.6;">
+                  Thank you for your interest in Savanna Safaris! We've received your inquiry and our team will review it shortly.
+                </p>
+                
+                <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #E67E22;">
+                  <h3 style="color: #4A3728; margin-top: 0; font-size: 16px;">Your Inquiry Details:</h3>
+                  <p style="margin: 8px 0; color: #4b5563;"><strong>Number of Travelers:</strong> ${travelers}</p>
+                  <p style="margin: 8px 0; color: #4b5563;"><strong>Package:</strong> ${packageType || "Not selected"}</p>
+                  <p style="margin: 8px 0; color: #4b5563;"><strong>Preferred Travel Month:</strong> ${travelMonth || "Not specified"}</p>
+                </div>
+                
+                <p style="color: #4b5563; line-height: 1.6;">
+                  One of our safari experts will get back to you within 24 hours to discuss your African adventure. 
+                  In the meantime, feel free to explore our website for more information about our safari packages.
+                </p>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                  <a href="https://safaris.savanna.to" style="background-color: #E67E22; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold;">
+                    Visit Our Website
+                  </a>
+                </div>
+                
+                <p style="color: #6b7280; font-size: 14px; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+                  If you have any urgent questions, please don't hesitate to contact us directly at 
+                  <a href="mailto:safaris@savanna.to" style="color: #E67E22;">safaris@savanna.to</a>
+                </p>
               </div>
               
-              <div style="background-color: #fef3c7; padding: 20px; border-radius: 8px; border-left: 4px solid #E67E22; margin: 25px 0;">
-                <h3 style="color: #92400e; margin-top: 0; font-size: 16px;">🦁 Why Choose Savanna Safaris?</h3>
-                <ul style="color: #92400e; margin: 10px 0; padding-left: 20px;">
-                  <li>Expert local guides with years of experience</li>
-                  <li>Luxury accommodations in the heart of nature</li>
-                  <li>Customizable packages for every adventure</li>
-                  <li>Unforgettable wildlife encounters</li>
-                </ul>
+              <div style="background-color: #f9fafb; padding: 20px; text-align: center; border-radius: 0 0 8px 8px; border-top: 1px solid #e5e7eb;">
+                <p style="color: #6b7280; font-size: 12px; margin: 0;">
+                  © 2025 Savanna Safaris. All rights reserved.
+                </p>
               </div>
-              
-              <p style="color: #4b5563; line-height: 1.6; margin-top: 30px;">
-                Best regards,<br>
-                <strong style="color: #E67E22;">The Savanna Safaris Team</strong> 🦁
-              </p>
             </div>
-            
-            <div style="background-color: #4A3728; padding: 20px; text-align: center; border-radius: 0 0 8px 8px;">
-              <p style="color: #9ca3af; font-size: 12px; margin: 0;">
-                © ${new Date().getFullYear()} Savanna Safaris. All rights reserved.
-              </p>
-              <p style="color: #9ca3af; font-size: 12px; margin: 5px 0 0 0;">
-                Your gateway to unforgettable African adventures 🌍
-              </p>
-            </div>
-          </div>
-        `,
-      }),
-    })
-
-    if (!autoReplyResponse.ok) {
-      console.error("Auto-reply failed, but main email sent successfully")
+          `,
+        }),
+      })
+    } catch (autoReplyError) {
+      console.error("Failed to send auto-reply:", autoReplyError)
+      // Don't fail the whole request if auto-reply fails
     }
 
     return NextResponse.json({ message: "Email sent successfully" }, { status: 200 })

@@ -67,7 +67,7 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-2">
                 <Mail className="h-5 w-5 flex-shrink-0 mt-0.5 text-primary" />
-                <span className="text-accent-foreground/80">info@savannahsafaris.com</span>
+                <span className="text-accent-foreground/80">safaris@savanna.to</span>
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="h-5 w-5 flex-shrink-0 mt-0.5 text-primary" />
