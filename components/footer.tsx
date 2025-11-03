@@ -10,7 +10,7 @@ export function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <Image src="/logo.png" alt="Savannah Safaris" width={40} height={40} className="h-10 w-10" />
+              <Image src="/logo.png" alt="Savanna Safaris" width={40} height={40} className="h-10 w-10" />
               <span className="text-lg font-bold font-[family-name:var(--font-heading)]">savanna safaris</span>
             </Link>
             <p className="text-accent-foreground/80 leading-relaxed">

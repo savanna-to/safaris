@@ -15,7 +15,7 @@ export function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.png" alt="Savannah Safaris" width={48} height={48} className="h-12 w-12" />
+            <Image src="/logo.png" alt="Savanna Safaris" width={48} height={48} className="h-12 w-12" />
             <span className="text-xl font-bold text-accent-foreground font-[family-name:var(--font-heading)]">
               savanna safaris
             </span>
@@ -50,8 +50,8 @@ export function Header() {
           </nav>
 
           <div className="hidden md:block">
-            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-              Book Your Safari
+            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+              <a href="#pricing">Book Your Safari</a>
             </Button>
           </div>
 
@@ -97,8 +97,8 @@ export function Header() {
               >
                 Contact
               </Link>
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 w-full">
-                Book Your Safari
+              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 w-full" asChild>
+                <a href="#pricing">Book Your Safari</a>
               </Button>
             </nav>
           </div>

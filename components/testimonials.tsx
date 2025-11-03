@@ -11,7 +11,7 @@ const testimonials = [
   {
     name: "James Chen",
     location: "San Francisco, USA",
-    text: "Savannah Safaris exceeded all expectations. Every detail was perfectly planned, and the wildlife encounters were incredible. Already planning our return trip!",
+    text: "Savanna Safaris exceeded all expectations. Every detail was perfectly planned, and the wildlife encounters were incredible. Already planning our return trip!",
     rating: 5,
   },
   {
